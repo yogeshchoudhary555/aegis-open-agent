@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AEGIS Open Agent — Open Agent Hackathon 2026</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0f172a;color:#e2e8f0}
+.slide{min-height:100vh;box-sizing:border-box;padding:64px 72px;border-bottom:2px solid #1e293b}
+h1{font-size:52px;line-height:1.1;margin:0 0 16px} h2{font-size:38px;margin:0 0 18px;color:#7dd3fc}
+p,li{font-size:20px;line-height:1.55;color:#cbd5e1} li{margin:10px 0}
+.big{font-size:24px;color:#f1f5f9} .num{font-size:64px;color:#38bdf8;font-weight:800}
+code{background:#1e293b;padding:2px 8px;border-radius:6px;font-size:18px;color:#a5f3fc}
+.small{font-size:15px;color:#94a3b8} .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px}
+a{color:#7dd3fc}
+</style></head><body>
+
+<section class="slide">
+<p class="small">OPEN AGENT HACKATHON 2026 · WILDCARD ENTRY · TEAM "AEGIS" (SOLO)</p>
+<h1>🛡️ AEGIS Open Agent</h1>
+<p class="big">A business agent that answers from your real data —<br>and shows its receipts.</p>
+<p>Data layer: federated queries (Zetaris pattern) · Power layer: lane-routed models (Meterless pattern) · Every answer carries an explain-why trace.</p>
+<p class="small">Yogesh Choudhary · Built on the ideas of AEGIS (always-on personal AI agent) with entirely new code for this entry.</p>
+</section>
+
+<section class="slide">
+<h2>The problem</h2>
+<p>Business data lives in fragments: customers in a CRM, orders in a store, tickets in support. Chatbots guess across that mess — or refuse to touch it.</p>
+<p>A useful agent must do three things at once:</p>
+<ul>
+<li><b>Reach</b> the fragmented data without copying it everywhere.</li>
+<li><b>Reason</b> with the right model for each step — not one model for everything.</li>
+<li><b>Explain</b> every number it reports, so a human can trust it.</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2>What it does — live demo</h2>
+<p>Ask in plain language. The agent plans queries, runs them, and answers with citations:</p>
+<div class="grid">
+<div class="card"><div class="num">₹25,083</div><p>Total revenue — 8 orders, store source, query shown</p></div>
+<div class="card"><div class="num">16,087</div><p>October 2026 revenue — month-filtered, same pipeline</p></div>
+<div class="card"><div class="num">7,497</div><p>Mechanical Keyboard — top product by revenue</p></div>
+<div class="card"><div class="num">3</div><p>Open support tickets — support source, live count</p></div>
+</div>
+<p>Unknown questions get an honest "I can't answer that from these sources" — never a hallucinated number.</p>
+</section>
+
+<section class="slide">
+<h2>Architecture</h2>
+<div class="grid">
+<div class="card"><h3 style="color:#7dd3fc">Data — Zetaris pattern</h3>
+<p>One query layer over many sources (crm / store / support). Zero data movement in the pattern: queries federate, only results travel.</p>
+<p>Live mode: <code>ZETARIS_BASE_URL</code> + <code>ZETARIS_QUERY_PATH</code>. Demo mode: same interface over seeded data — real executed SQL.</p></div>
+<div class="card"><h3 style="color:#7dd3fc">Power — Meterless pattern</h3>
+<p>Lane routing: <b>fast</b> lane for aggregates, <b>reasoning</b> lane for ranked answers, <b>research</b> lane for cross-source questions.</p>
+<p>Backends: local Meterless-style endpoint, NVIDIA Nemotron, Nebius Nemotron — else labeled demo synthesis from rows only.</p></div>
+</div>
+<p>Read-only by construction: only a single SELECT/WITH is ever executed. There is no write path to approve or abuse.</p>
+</section>
+
+<section class="slide">
+<h2>Explain-why, on every answer</h2>
+<p>Each response returns a trace:</p>
+<ul>
+<li><b>Plan</b> — which queries, in which order</li>
+<li><b>Queries</b> — the exact SQL text</li>
+<li><b>Sources</b> — which system each fact came from, with row counts</li>
+<li><b>Lane + backend + mode + latency</b> — what ran it, how, how fast</li>
+</ul>
+<p>This is the judging criterion "explain why it reached an answer", implemented as data, not as a claim.</p>
+</section>
+
+<section class="slide">
+<h2>What is real vs demo — stated plainly</h2>
+<ul>
+<li><b>Real today:</b> the agent, the planner, the federation interface, the lane router, the read-only guard, the UI, the API, the tests (8 passing), the deployment.</li>
+<li><b>Demo mode today:</b> seeded data + deterministic synthesis from queried rows. Numbers are computed, not canned — but no live model call happens without a key.</li>
+<li><b>Needs a credential:</b> a live Zetaris endpoint needs the hackathon-issued URL + query route; a live Nemotron call needs a NVIDIA or Nebius key. Neither was available during this build, so live-model synthesis is implemented but not live-tested.</li>
+</ul>
+<p>Nothing in this deck claims a live call that did not happen.</p>
+</section>
+
+<section class="slide">
+<h2>Links</h2>
+<p>Repo (code + README + setup): <a href="https://github.com/yogeshchoudhary555/aegis-open-agent">github.com/yogeshchoudhary555/aegis-open-agent</a></p>
+<p>Live deployment: <a href="https://aegis-open-agent-verepremiumfashion.vercel.app">aegis-open-agent-verepremiumfashion.vercel.app</a></p>
+<p>Base project: <a href="https://github.com/yogeshchoudhary555/aegis">github.com/yogeshchoudhary555/aegis</a> (untouched; this entry is new code on its patterns)</p>
+<p>Run locally: <code>pip install -r requirements.txt</code> · <code>python server.py</code> · open <code>http://localhost:8000</code></p>
+<p class="small">Try it: "What is the total revenue?" · "Which product sells the most by revenue?" · "How many support tickets are open?"</p>
+</section>
+
+</body></html>

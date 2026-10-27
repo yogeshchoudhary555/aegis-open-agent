@@ -5,3 +5,13 @@ __pycache__/
 data/
 aegis-source/
 .DS_Store
+
+# demo intermediates (frames, segments, raw audio) — final video only is tracked
+demo/seg-*.mp4
+demo/video-silent.mp4
+demo/narration-raw.wav
+demo/narration-clean.wav
+demo/narration-norm.wav
+demo/frames/
+demo/concat.txt
+demo/loudnorm-measure.txt

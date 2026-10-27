@@ -1,0 +1,15 @@
+AEGIS Open Agent. A business agent that answers from your real data — and shows its receipts.
+
+Business data lives in fragments. Customers in a C-R-M. Orders in a store. Tickets in support. Most chatbots guess across that mess. This agent does not guess.
+
+Ask it a plain question. What is the total revenue? It plans a query, runs it through the federation layer, and answers: twenty-five thousand and eighty-three — with the exact query and the source cited.
+
+Which product sells the most by revenue? Mechanical Keyboard, at seven thousand four hundred and ninety-seven. Again, query shown, source shown.
+
+How many support tickets are open? Three. Every answer carries an explain-why trace: the plan, the queries, the sources, the lane, and the latency.
+
+The data layer follows the Zetaris pattern: one query layer over many sources, without moving the data. The power layer follows the Meterless pattern: the right model in each lane — fast for aggregates, reasoning for ranked answers.
+
+And it only reads. There is no write path at all — only a single select query is ever executed. So it cannot delete, order, or message anything by design.
+
+Try it yourself. The repo, the live deployment, and the setup instructions are in the description. Ask it: what is the total revenue?
