@@ -95,8 +95,8 @@ tickets are open?" → 3.
 
 ## Deploy
 
-Live deployment: <!-- DEPLOY_URL -->
-Demo video: <!-- VIDEO_PATH -->
+Live deployment: https://aegis-open-agent-verepremiumfashion.vercel.app
+Demo video: demo/demo-video.mp4
 Slide deck: `deck/index.html`
 
 ## What is new vs the original AEGIS
